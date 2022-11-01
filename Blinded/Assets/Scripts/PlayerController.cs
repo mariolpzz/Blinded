@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Esto hace que el personaje se pueda mover y este animado
         var velocity = Vector3.forward * Input.GetAxis("Vertical") * speed;
         transform.Translate(velocity * Time.deltaTime);
         playerAnim.SetFloat("Speed_f", velocity.magnitude);
