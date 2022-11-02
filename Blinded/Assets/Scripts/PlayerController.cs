@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
 
     private Animator playerAnim;
-    public float speed = 10;
+    public float speed = 12;
     public float rotationSpeed = 15;
     private Rigidbody playerRb;
 
