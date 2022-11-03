@@ -8,21 +8,21 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
     public float speed = 12;
     public float rotationSpeed = 15;
-    private Rigidbody playerRb;
+    private CharacterController characterController;
 
     // Start is called before the first frame update
     void Start()
     {
         playerAnim = GetComponent<Animator>();
-        playerRb = GetComponent<Rigidbody>();
+        characterController = GetComponent<CharacterController>();
     }
 
     private void Update()
     {
-
+        AnimationStates();
     }
 
-    void LateUpdate()
+    void FixedUpdate()
     {
 
         float horizontalInput = Input.GetAxis("Horizontal");
@@ -31,14 +31,38 @@ public class PlayerController : MonoBehaviour
 
         var velocity = movement * speed;
 
-        playerRb.AddForce(velocity / Time.deltaTime);
+        characterController.SimpleMove(movement);
 
         if (movement.magnitude != 0)
         {
             var rotation = Quaternion.LookRotation(movement);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed);
         }
+    }
 
-        playerAnim.SetFloat("Speed_f", velocity.magnitude);
+
+    private void AnimationStates()
+    {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        {
+            playerAnim.SetBool("isWalking", true);
+        }
+        else
+        {
+            playerAnim.SetBool("isWalking", false);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            playerAnim.SetBool("isRunning", true);
+            playerAnim.SetBool("isWalking", false);
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            playerAnim.SetBool("isRunning", false);
+        }
     }
 }
+
