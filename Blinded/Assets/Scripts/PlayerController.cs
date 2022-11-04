@@ -19,16 +19,22 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        AnimationStates();
+        Move();
     }
 
     void FixedUpdate()
     {
 
+        
+    }
+
+
+    private void Move()
+    {
+
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(horizontalInput, 0, verticalInput);
-
         var velocity = movement * speed;
 
         characterController.SimpleMove(movement);
@@ -38,12 +44,8 @@ public class PlayerController : MonoBehaviour
             var rotation = Quaternion.LookRotation(movement);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed);
         }
-    }
 
-
-    private void AnimationStates()
-    {
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+        if (movement != Vector3.zero && !Input.GetKey(KeyCode.LeftShift))
         {
             playerAnim.SetBool("isWalking", true);
         }
@@ -58,7 +60,6 @@ public class PlayerController : MonoBehaviour
             playerAnim.SetBool("isRunning", true);
             playerAnim.SetBool("isWalking", false);
         }
-
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             playerAnim.SetBool("isRunning", false);
