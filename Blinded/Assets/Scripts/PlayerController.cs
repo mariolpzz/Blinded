@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator playerAnim;
     public float speed = 12;
-    public float rotationSpeed = 15;
+    public float rotationSpeed = 1;
     private CharacterController characterController;
 
     // Start is called before the first frame update
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && movement != Vector3.zero)
         {
             playerAnim.SetBool("isRunning", true);
             playerAnim.SetBool("isWalking", false);
