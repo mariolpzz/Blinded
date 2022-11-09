@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,17 +10,31 @@ public class PlayerController : MonoBehaviour
     public float speed = 12;
     public float rotationSpeed = 1;
     private CharacterController characterController;
+    //private bool lantern;
+    private Light lantern;
 
     // Start is called before the first frame update
     void Start()
     {
         playerAnim = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        lantern = GetComponentInChildren<Light>();
     }
 
     private void Update()
     {
         Move();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            lantern.enabled = !lantern.enabled;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerAnim.SetTrigger("jumpOver");
+        }
+
     }
 
     void FixedUpdate()

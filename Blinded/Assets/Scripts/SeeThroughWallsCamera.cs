@@ -8,11 +8,7 @@ public class SeeThroughWallsCamera : MonoBehaviour
 
     public GameObject player;
     public bool obstructed = false;
-    private Material baseMaterial;
-    public Renderer rend;
-    private bool bigObject;
-    List<Renderer> childs = new List<Renderer>();
-    private Shader opaco = Shader.Find("Standard");
+    private Renderer rend;
 
     // Start is called before the first frame update
     void Start()
@@ -37,22 +33,18 @@ public class SeeThroughWallsCamera : MonoBehaviour
             //Si no esta "viendo" al Player, bajo el componente "Alpha" del material que esta obstruyendo
             if (hit.collider.gameObject.tag != "Player")
             {
-                bigObject = false;
                 rend = hit.transform.GameObject().GetComponent<Renderer>();
                 rend.material.shader = Shader.Find("Transparent/Diffuse");
                 Color colorAux = rend.material.color;
-                colorAux.a = 0.3F;
+                colorAux.a = 0.4F;
                 rend.material.color = colorAux;
 
                 obstructed = true;
             }
-            else
+            else if (obstructed)
             {
-                if (obstructed)
-                { 
-                    rend.material.shader = Shader.Find("Standard");
-                    obstructed = false;
-                }
+                rend.material.shader = Shader.Find("Standard");
+                obstructed = false;
             }
         }
     }
