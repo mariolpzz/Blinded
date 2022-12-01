@@ -22,7 +22,7 @@ public class BlindVision : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vision1();
+        Vision2();
     }
 
 
@@ -39,10 +39,8 @@ public class BlindVision : MonoBehaviour
         }
 
 
-        //lineRenderer.SetPosition(0, lineRenderer.GetPosition(0) + new Vector3(-10, 0, 10) * Time.deltaTime);
-        //lineRenderer.SetPosition(1, lineRenderer.GetPosition(1) + new Vector3(10, 0, 10) * Time.deltaTime);
-
-        lineRenderer.transform.localScale += new Vector3(0, 0, 10) * Time.deltaTime;
+        lineRenderer.SetPosition(0, lineRenderer.GetPosition(0) + new Vector3(-10, 0, 10) * Time.deltaTime);
+        lineRenderer.SetPosition(1, lineRenderer.GetPosition(1) + new Vector3(10, 0, 10) * Time.deltaTime);
 
     }
 
