@@ -14,8 +14,8 @@ public class BlindVision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.positionCount = 2;
+        //lineRenderer = GetComponent<LineRenderer>();
+        //lineRenderer.positionCount = 2;
 
     }
 
