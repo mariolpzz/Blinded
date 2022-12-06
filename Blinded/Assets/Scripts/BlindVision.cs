@@ -28,7 +28,7 @@ public class BlindVision : MonoBehaviour
 
     void Vision1()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
 
             //Destroy(lineRenderer, 3);
@@ -46,7 +46,7 @@ public class BlindVision : MonoBehaviour
 
     void Vision2()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             vision.SetActive(true);
             isFinished = false;
