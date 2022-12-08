@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 
     private Animator playerAnim;
     public float speed = 12;
-    public float rotationSpeed = 1;
+    public float rotationSpeed = 3;
     private CharacterController characterController;
     //private bool lantern;
     private Light lantern;
