@@ -22,9 +22,8 @@ public class LightVision : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Debug.Log("1");
-            InvokeRepeating("IncreaseVision", .01f, 0.01f);
-            Debug.Log("2");
+            max = false;
+            InvokeRepeating("IncreaseVision", .01f, .01f);
 
         }
 
@@ -34,24 +33,16 @@ public class LightVision : MonoBehaviour
 
     void IncreaseVision()
     {
-        if (vision.spotAngle < 150)
+        if (vision.spotAngle < 150 && !max)
         {
             vision.spotAngle += 0.7f;
-        } else
+        } else if (!max)
         {
-            DecreaseVision();
-        }
-    }
-
-    void DecreaseVision()
-    {
-        if (vision.spotAngle > 60)
+            max = true;
+        } else if (vision.spotAngle > 60)
         {
             vision.spotAngle -= 1;
-
-        } else
-        {
-            return;
         }
     }
+
 }
