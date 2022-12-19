@@ -12,23 +12,40 @@ public class PlayerController3D : MonoBehaviour
     public Transform cam;
     private Light lantern;
 
+    
+    
+
 void Start()
     {
         playerAnim = GetComponent<Animator>();
         lantern = GetComponentInChildren<Light>();
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
+         Movement();
+         PickObjects();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            lantern.enabled = !lantern.enabled;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            playerAnim.SetTrigger("jumpOver");
+        }
+    }
+
+    private void Movement()
+    {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
-
         Vector3 direction = new Vector3(horizontal,0f,vertical).normalized;
         
-      
-
         if(direction.magnitude != 0)
         {
 
@@ -62,6 +79,11 @@ void Start()
         {
             playerAnim.SetBool("isRunning", false);
         }
+    }
+
+    private void PickObjects()
+    {
+
     }
 
    
