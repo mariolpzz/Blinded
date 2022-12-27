@@ -11,23 +11,26 @@ public class PlayerController3D : MonoBehaviour
     float turnSmoothVelocity;
     public Transform cam;
     private Light lantern;
+    public static bool isOnHand = false;
+    public float forceMagnitude = 1;
 
-    
-    
 
-void Start()
+
+
+
+
+    void Start()
     {
         playerAnim = GetComponent<Animator>();
         lantern = GetComponentInChildren<Light>();
 
     }
 
-
+    
     // Update is called once per frame
     void Update()
     {
          Movement();
-         PickObjects();
 
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -80,11 +83,39 @@ void Start()
             playerAnim.SetBool("isRunning", false);
         }
     }
-
-    private void PickObjects()
+    
+    
+    //Controller of the collisions of the body while walking
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        Rigidbody objectRB = hit.collider.attachedRigidbody;
 
+        if (objectRB != null)
+        {
+            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            forceDirection.y = 0;
+            forceDirection.Normalize();
+
+            objectRB.AddForceAtPosition(forceDirection * forceMagnitude, transform.position,ForceMode.Force);
+        }
     }
 
-   
+    public static void setIsOnHand(bool state)
+    {
+        if (state == true)
+        {
+            isOnHand = true;
+        }else
+        {
+            isOnHand = false;
+        }
+    }
+
+    public static bool getIsOnHand()
+    {
+        return isOnHand;
+    }
+
+
+
 }
