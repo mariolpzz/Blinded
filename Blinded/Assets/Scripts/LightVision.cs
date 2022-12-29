@@ -8,7 +8,9 @@ public class LightVision : MonoBehaviour
 {
 
     private bool max = false;
+    private bool running = false;
     private Light vision;
+    private float speed = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +25,12 @@ public class LightVision : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             max = false;
-            InvokeRepeating("IncreaseVision", .01f, .01f);
+            if (!running)
+            {
+                running = true;
+                CancelInvoke("IncreaseVision");
+                InvokeRepeating("IncreaseVision", 0, 0.01f);
+            }
 
         }
 
@@ -33,16 +40,25 @@ public class LightVision : MonoBehaviour
 
     void IncreaseVision()
     {
+
+        running = true;
+
         if (vision.spotAngle < 150 && !max)
         {
             vision.spotAngle += 0.7f;
+
         } else if (!max)
         {
             max = true;
+
         } else if (vision.spotAngle > 60)
         {
             vision.spotAngle -= 1;
+        } else
+        {
+            running = false;
         }
+
     }
 
 }
