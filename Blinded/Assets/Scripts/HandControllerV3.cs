@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandCotrollerV2 : MonoBehaviour
+public class HandControllerV3 : MonoBehaviour
 {
     public GameObject hands;
+    public GameObject camera;
     private Collider nearestCollider = null;
     private Collider[] itemsInside;
 
@@ -36,10 +37,11 @@ public class HandCotrollerV2 : MonoBehaviour
             }
             //Debug.Log("Collider cercano definitivo " + nearestCollider);
         }
-        else {
+        else
+        {
             lastNearestDistance = 100f;
         }
-        
+
 
     }
 
@@ -47,13 +49,14 @@ public class HandCotrollerV2 : MonoBehaviour
     {
         //ADDING OUTLINE COMPONENT TO THE NEAREST OBJECT
         //==============================================
-        if (nearestCollider != null) 
+        if (nearestCollider != null)
         {
-            if (nearestCollider.gameObject.GetComponent<Outline>() == null) 
+            if (nearestCollider.gameObject.GetComponent<Outline>() == null)
             {
-            nearestCollider.gameObject.AddComponent<Outline>();
+                nearestCollider.gameObject.AddComponent<Outline>();
+                nearestCollider.gameObject.GetComponent<Outline>().enabled = false;
             }
-            
+
 
             //IF THE NEAREST OBJECT IS EQUALS TO ANY OBJECT INSIDE THE HANDS TRIGGER
             //======================================================================
@@ -107,21 +110,29 @@ public class HandCotrollerV2 : MonoBehaviour
                         nearestCollider.gameObject.transform.SetParent(null);
 
                         PlayerController3D.setIsOnHand(false);
+                        nearestCollider.gameObject.GetComponent<Outline>().enabled = false;
 
 
                     }
 
-                    if (Input.GetKey(KeyCode.T) && (PlayerController3D.getIsOnHand() == true))
+                   /* if (Input.GetKey(KeyCode.T) && (PlayerController3D.getIsOnHand() == true))
                     {
 
                         nearestCollider.gameObject.GetComponent<Rigidbody>().useGravity = true;
                         nearestCollider.gameObject.GetComponent<Rigidbody>().isKinematic = false;
                         nearestCollider.gameObject.transform.SetParent(null);
                         PlayerController3D.setIsOnHand(false);
-                        nearestCollider.gameObject.GetComponent<Rigidbody>().AddForce(this.transform.forward * 1000);
+                        Vector3 direccion = new Vector3(camera.transform.eulerAngles.x, camera.transform.eulerAngles.y, 0f);
+
+                        Debug.Log("Euler en X: " + camera.transform.eulerAngles.x);
+                        Debug.Log("Euler en y: " + camera.transform.eulerAngles.y);
+                        Debug.Log("Euler en z: " + camera.transform.eulerAngles.z);
+                        Debug.Log("Euler en : " + camera.transform.eulerAngles.z);
+
+                        nearestCollider.gameObject.GetComponent<Rigidbody>().AddForce(direccion * 50);
 
 
-                    }
+                    }*/
 
                 }
 
@@ -131,7 +142,7 @@ public class HandCotrollerV2 : MonoBehaviour
                 nearestCollider.gameObject.GetComponent<Outline>().enabled = false;
             }
         }
-        
+
 
 
     }
@@ -142,7 +153,10 @@ public class HandCotrollerV2 : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-        nearestCollider.gameObject.GetComponent<Outline>().enabled = false;
+        if (nearestCollider.gameObject.GetComponent<Outline>() != null)
+        {
+            nearestCollider.gameObject.GetComponent<Outline>().enabled = false;
+        }
     }
 
 }
