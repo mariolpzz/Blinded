@@ -53,7 +53,7 @@ public class LightVision : MonoBehaviour
 
         } else if (vision.spotAngle > 60)
         {
-            vision.spotAngle -= 1;
+            vision.spotAngle -= 10;
         } else
         {
             running = false;
