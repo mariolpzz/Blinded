@@ -5,7 +5,7 @@ using UnityEngine;
 public class HandControllerV3 : MonoBehaviour
 {
     public GameObject hands;
-    public GameObject camera;
+    public GameObject playerCamera;
     private Collider nearestCollider = null;
     private Collider[] itemsInside;
 
@@ -23,7 +23,7 @@ public class HandControllerV3 : MonoBehaviour
             {
                 distanceFromHand = Vector3.Distance(item.transform.position, this.transform.position);
 
-                if (item.CompareTag("Movable") || item.CompareTag("Pickable"))
+                if (item.CompareTag("Movable") || item.CompareTag("Pickable") || item.CompareTag("Pushable"))
                 {
 
 
@@ -92,7 +92,7 @@ public class HandControllerV3 : MonoBehaviour
                             nearestCollider.gameObject.GetComponent<Rigidbody>().useGravity = false;
                             nearestCollider.gameObject.GetComponent<Rigidbody>().isKinematic = true;
 
-                            Vector3 center = other.GetComponent<Renderer>().bounds.center;
+                            //Vector3 center = other.GetComponent<Renderer>().bounds.center;
                             nearestCollider.gameObject.transform.position = hands.transform.position;
 
 
@@ -101,6 +101,26 @@ public class HandControllerV3 : MonoBehaviour
 
                         }
                     }
+
+
+                    if (other.gameObject.CompareTag("Pushable"))
+                    {
+
+                        while (Input.GetKey(KeyCode.E) && PlayerController3D.getIsOnHand() == false)
+                        {
+                            PlayerController3D.setIsOnHand(true);
+
+                            Vector3 forceDirection = nearestCollider.gameObject.transform.position - transform.position;
+                            forceDirection.y = 0;
+                            forceDirection.Normalize();
+
+                            nearestCollider.attachedRigidbody.AddForceAtPosition(forceDirection * 10000, transform.position, ForceMode.Force);
+
+
+                        }
+                        PlayerController3D.setIsOnHand(false);
+                    }
+
 
                     if (Input.GetKey(KeyCode.R) && (PlayerController3D.getIsOnHand() == true))
                     {
