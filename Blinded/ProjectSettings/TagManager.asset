@@ -10,6 +10,7 @@ TagManager:
   - Movable
   - Hands
   - Pushable
+  - PushablePullable
   layers:
   - Default
   - TransparentFX
