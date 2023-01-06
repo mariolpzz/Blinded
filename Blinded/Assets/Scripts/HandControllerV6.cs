@@ -214,17 +214,11 @@ public class HandControllerV6 : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-
-
         if (other.gameObject.CompareTag("PushablePullable"))
         {
             if (Input.GetKey(KeyCode.E)) 
             {
-
                 other.attachedRigidbody.velocity = boyDirection;
-                
-                
-                
             }
         }
     }
